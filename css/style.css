@@ -1,0 +1,267 @@
+/* style.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+    text-align: left;
+}
+
+nav {
+    display: flex;
+    gap: 15px;
+}
+
+nav button {
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    background-color: #f8b400;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+nav button:hover {
+    background-color: #ff8c00;
+}
+
+#main-image {
+    background-color: #e0f7fa;
+    text-align: center;
+    padding: 30px 0;
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    gap: 50px; /* 画像間のスペースを調整 */
+}
+
+.fade-image {
+    width: 150px; /* 適切なサイズに調整 */
+    transition: opacity 0.5s ease; /* フェード効果 */
+}
+
+.hidden {
+    opacity: 0; /* フェードアウトのスタイル */
+}
+
+main {
+    padding: 20px;
+    text-align: center;
+    opacity: 0; /* 初期状態で透明にする */
+    visibility: hidden; /* 初期状態で非表示にする */
+    transition: opacity 0.8s ease, visibility 0s 0.8s; /* フェードインのアニメーション */
+}
+
+main.show {
+    opacity: 1; /* 表示 */
+    visibility: visible; /* 表示 */
+    transition: opacity 0.8s ease; /* フェードインアニメーション */
+}
+
+select {
+    margin: 10px;
+    padding: 10px;
+    font-size: 16px;
+    width: 90%;
+    max-width: 300px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 40px 20px; /* フッター内に余白を追加 */
+    position: relative; /* 相対位置 */
+    width: 100%;
+}
+
+.footer-logo {
+    position: relative; /* 相対位置でフッター内に配置 */
+    top: -30px; /* 画像がテキストの上に表示されるように調整 */
+    margin-bottom: -30px; /* テキストとの間の余白を調整 */
+}
+
+.footer-logo img {
+    width: 200px; /* 画像サイズの調整 */
+    filter: invert(1); /* 明度反転 */
+    transition: transform 0.3s ease; /* ホバー時のエフェクト */
+}
+
+.footer-logo img:hover {
+    transform: scale(1.1); /* ホバー時に少し拡大 */
+}
+
+footer a {
+    color: #f8b400;
+    text-decoration: none;
+    margin-right: 15px;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
+    margin-top: 20px; /* 画像とコピーライトの間に余白を追加 */
+}
+
+/* 「開始！」ボタン、カウントダウン開始ボタン、次の問題へ進むボタンのスタイル */
+#start-button, #start-countdown-button, #next-question-button, #cancel-countdown-button, .answer-button {
+    display: block; /* 中央揃えのためのブロック表示 */
+    margin: 20px auto; /* 上下にマージンを追加し、中央に揃える */
+    padding: 10px 20px; /* ボタン内の余白を調整 */
+    font-size: 18px; /* フォントサイズを調整 */
+    background-color: #f8b400; /* 背景色 */
+    color: white; /* テキスト色 */
+    border: none; /* ボーダーを削除 */
+    border-radius: 5px; /* 角を丸くする */
+    cursor: pointer; /* カーソルをポインタに変更 */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* ホバー時のエフェクト */
+    width: 90%; /* 幅を選択肢と同じに設定 */
+    max-width: 300px; /* 最大幅を選択肢に合わせる */
+    text-align: center; /* テキストを中央揃え */
+}
+
+/* ボタンのホバー時のスタイル */
+#start-button:hover, #start-countdown-button:hover, #next-question-button:hover, #cancel-countdown-button:hover, .answer-button:hover {
+    background-color: #1e1e1e; /* ホバー時の背景色 */
+    transform: scale(1.05); /* ホバー時に少し拡大 */
+}
+
+/* カウントダウンの円グラフのスタイル */
+#countdown-timer {
+    display: block; /* ブロック表示で中央揃え */
+    margin: 20px auto; /* 中央に揃えるためのマージン */
+    width: 200px; /* 円グラフの幅を指定 */
+    height: 200px; /* 円グラフの高さを指定 */
+}
+
+/* 問題文のスタイル */
+#question-content {
+    background-color: #f0f8ff; /* 背景色を設定 */
+    border: 2px solid #f8b400; /* ボーダーを設定 */
+    padding: 20px; /* 内側の余白を設定 */
+    margin: 20px auto; /* 上下にマージンを設定し、中央揃え */
+    width: 80%; /* 幅を設定 */
+    max-width: 500px; /* 最大幅を設定 */
+    font-size: 18px; /* フォントサイズを大きくする */
+    color: #333; /* テキストの色を設定 */
+    border-radius: 10px; /* 角を丸くする */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* ボックスシャドウを追加して立体感を出す */
+    text-align: center; /* テキストを中央揃え */
+    line-height: 1.6; /* 行間を調整して読みやすくする */
+}
+
+/* options-containerとその中の選択肢を左寄せにするスタイル */
+.options-container {
+    text-align: left; /* 全体を左寄せ */
+    margin-top: 10px;
+}
+
+.options-container div {
+    display: flex;
+    align-items: center;
+}
+
+.options-container label {
+    margin-left: 8px; /* ラベルとラジオボタンの間にスペースを追加 */
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    max-width: 90%; /* ページ全体の幅に合わせる */
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 のアスペクト比を維持 */
+    margin: 0 auto; /* 動画を中央に配置 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 軽いシャドウを追加 */
+    border-radius: 15px; /* 角を丸くする */
+    overflow: hidden; /* iframeが角からはみ出ないようにする */
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px; /* iframeにも角丸を適用 */
+}
+
+#remaining-questions {
+    text-align: center;  /* 中央揃え */
+    font-size: 1.5em;    /* フォントサイズを大きく */
+    font-weight: bold;   /* フォントを太く */
+    margin: 20px 0;      /* 上下に余白を追加 */
+    color: #333;         /* テキストの色を変更 */
+    background-color: #f4f4f4;  /* 背景色を追加 */
+    padding: 10px;       /* 内側の余白を追加 */
+    border-radius: 10px;  /* 角を丸くする */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* 影を追加して立体感を出す */
+}
+
+
+
+/* スマホ用のメディアクエリ */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav {
+        width: 100%;
+        justify-content: center;
+    }
+
+    nav button {
+        width: 80%;
+        margin-bottom: 10px;
+        font-size: 18px;
+    }
+
+    #main-image {
+        padding: 20px 0;
+    }
+
+    main {
+        padding: 10px;
+    }
+
+    select {
+        width: 95%;
+        max-width: none;
+        margin-bottom: 15px;
+    }
+
+    footer {
+        padding: 20px 15px;
+        font-size: 14px;
+    }
+
+    .footer-logo {
+        top: -20px; /* スマホ用に調整 */
+    }
+}

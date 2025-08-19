@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>魚館</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- xlsxライブラリの追加 -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>魚館(全国手話検定っぽいやつを見れる場所)</h1>
+        <nav>
+            <button id="jitsugi-btn" onclick="showImage('jitsugi'); showDropdowns('shuwa')">実技</button>
+            <button id="hikki-btn" onclick="showImage('hikki'); showDropdowns('writing')">筆記</button>
+        </nav>
+    </header>
+
+    <section id="main-image">
+        <div class="image-container">
+            <img id="hand-image" src="images/svg/hand-with-fingers-splayed-svgrepo-com.svg" alt="手の画像" class="fade-image">
+            <img id="pencil-image" src="images/svg/pencil-svgrepo-com.svg" alt="鉛筆の画像" class="fade-image">
+        </div>
+    </section>
+
+    <!-- ドロップダウンメニューをラップするdivを追加し、CSSで初期状態を非表示に設定 -->
+    <main id="dropdown-container">
+        <label for="year-select">出題年度:</label>
+        <select id="year-select">
+            <option value="">選択してください</option>
+        </select>
+
+        <label for="level-select">出題レベル:</label>
+        <select id="level-select">
+            <option value="">選択してください</option>
+        </select>
+
+        <label for="type-select">出題タイプ:</label>
+        <select id="type-select">
+            <option value="">選択してください</option>
+        </select>
+    </main>
+
+    <!-- 初期状態で非表示の「開始！」ボタン -->
+    <button id="start-button" style="display: none;">開始！</button>
+
+    <!-- 過去の問題を表示するためのコンテナ -->
+    <!-- <div id="past-questions-container"> -->
+        <!-- ここに過去の問題が追加されていきます -->
+    <!-- </div> -->
+    <!-- <div id="question-content">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/DLhwDG8FVCw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div> -->
+
+    <!-- 現在の問題を表示するためのエリア -->
+    <div id="remaining-questions"></div>
+    <div id="question-container" style="display: none;">
+        <div id="question-content"></div>
+        <button id="start-countdown-button" style="display: none;">カウントダウン開始</button>
+        <canvas id="countdown-timer" width="200" height="200" style="display: none;"></canvas>
+        <button id="next-question-button" style="display: none;">次の問題へ進む</button>
+        <button id="cancel-countdown-button" style="display: none;">キャンセル</button>
+    </div>
+
+
+    <footer>
+        <div class="footer-logo">
+            <a href="index.html">
+                <img src="images/png/logo.png" alt="サイトのロゴ" class="inverted-image"> <!-- 明度反転させたロゴ画像 -->
+            </a>
+        </div>
+        <p>© 2024 Katsuo Shuwa Doga. All rights reserved.</p> <!-- コピーライト -->
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
