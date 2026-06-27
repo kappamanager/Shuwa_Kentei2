@@ -1005,6 +1005,13 @@
 
     // Footer TOP link
     $('footer-top-link').onclick = goTop;
+
+    // Reset stats
+    $('btn-reset-stats').onclick = () => {
+      if (!confirm('学習記録をリセットしますか？')) return;
+      localStorage.removeItem('shuwa_stats');
+      setState({ totalStudied: 0, totalCorrect: 0, streakDays: 0 });
+    };
   }
 
   function goTop() {
