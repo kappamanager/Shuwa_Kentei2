@@ -994,6 +994,7 @@
     // Question page back button
     $('btn-back-question').onclick = () => {
       if (countdownInterval) { clearInterval(countdownInterval); countdownInterval = null; }
+      if (state.answered > 0) saveStats(state.answered, state.correct);
       setState({
         screen: 'select',
         currentQuestion: null,
