@@ -785,8 +785,8 @@
     appendEl(container, 'div', { className: 'q-text-fill' }, q.Question);
 
     const opts = (q.Option || '').split('\n').filter(o => o.trim());
-    const matches = [...(q.Question || '').matchAll(/[ア-オ]/g)];
-    const uniqueMatches = [...new Set(matches.map(m => m[0]))];
+    const matches = [...(q.Question || '').matchAll(/[（\(]([ア-オ])[）\)]/g)];
+    const uniqueMatches = [...new Set(matches.map(m => m[1]))];
 
     uniqueMatches.forEach((m, mi) => {
       const grp = appendEl(container, 'div', { className: 'fill-select-group' });
