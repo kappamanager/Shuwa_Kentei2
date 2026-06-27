@@ -1,0 +1,905 @@
+/* ========================================
+   魚館＜手話検定シミュレーター＞ - style.css
+   ======================================== */
+
+/* --- Animations --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes confetti1 {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(-120px) rotate(360deg) translateX(40px); opacity: 0; }
+}
+@keyframes confetti2 {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(-100px) rotate(-300deg) translateX(-50px); opacity: 0; }
+}
+@keyframes confetti3 {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(-140px) rotate(200deg) translateX(20px); opacity: 0; }
+}
+@keyframes countPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+
+/* --- Reset & Base --- */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: 'Noto Sans JP', sans-serif;
+  background: #F0EDE8;
+  min-height: 100vh;
+}
+
+#app {
+  max-width: 640px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ========================================
+   TOP PAGE
+   ======================================== */
+.top-split {
+  flex: 1;
+  display: flex;
+  min-height: 320px;
+  position: relative;
+}
+
+.top-half {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  cursor: pointer;
+  transition: flex 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.top-half:hover { flex: 1.2; }
+
+.top-shuwa {
+  background: linear-gradient(165deg, #FFF5F1 0%, #FFDDD3 50%, #F4B5A5 100%);
+}
+.top-writing {
+  background: linear-gradient(195deg, #F1F4FF 0%, #D3DDFF 50%, #A5BDF4 100%);
+}
+
+.top-divider {
+  width: 2px;
+  background: rgba(255,255,255,0.8);
+  z-index: 1;
+}
+
+.top-icon-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.top-icon-shuwa { box-shadow: 0 4px 16px rgba(232,147,126,0.2); }
+.top-icon-writing { box-shadow: 0 4px 16px rgba(122,157,232,0.2); }
+
+.top-icon-text {
+  font: 700 28px/1 'Zen Maru Gothic', sans-serif;
+}
+
+.top-title {
+  font: 900 28px/1.1 'Zen Maru Gothic', sans-serif;
+  margin-bottom: 6px;
+}
+
+.top-desc {
+  font: 400 12px/1.5 'Noto Sans JP', sans-serif;
+  text-align: center;
+}
+
+.top-tags {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.top-tag {
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 14px;
+  padding: 5px 12px;
+  font: 500 10px/1.2 'Noto Sans JP', sans-serif;
+}
+
+/* Dashboard footer */
+.top-dashboard {
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(0,0,0,0.04);
+  padding: 16px 20px;
+}
+
+.top-stats {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.top-stat-card {
+  flex: 1;
+  background: #F8F6F3;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+}
+
+.top-stat-label {
+  font: 400 9px/1 'Noto Sans JP', sans-serif;
+  color: rgba(45,42,38,0.45);
+}
+
+.top-stat-value {
+  font: 800 20px/1.2 'Noto Sans JP', sans-serif;
+  color: #2D2A26;
+  margin-top: 3px;
+}
+
+.loading-msg {
+  background: #FFF5F1;
+  border-radius: 10px;
+  padding: 10px 14px;
+  text-align: center;
+  font: 400 12px/1.4 'Noto Sans JP', sans-serif;
+  color: #C26A54;
+}
+
+/* ========================================
+   SELECT PAGE
+   ======================================== */
+#screen-select {
+  background: #FDFBF8;
+}
+
+.select-band {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.select-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 18px/1 'Zen Maru Gothic', sans-serif;
+}
+
+.select-band-text { flex: 1; }
+
+.select-title {
+  font: 700 17px/1.2 'Zen Maru Gothic', sans-serif;
+}
+
+.select-subtitle {
+  font: 400 11px/1.3 'Noto Sans JP', sans-serif;
+  margin-top: 2px;
+}
+
+.select-back {
+  font: 400 11px/1 'Noto Sans JP', sans-serif;
+  cursor: pointer;
+  padding: 6px 12px;
+  background: rgba(255,255,255,0.4);
+  border-radius: 8px;
+}
+
+.select-body {
+  padding: 24px 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.select-group {}
+
+.select-label {
+  font: 600 12px/1 'Noto Sans JP', sans-serif;
+  color: #2D2A26;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.step-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 10px sans-serif;
+  color: #fff;
+  background: #E8937E;
+}
+.step-circle.disabled { background: #C5C5C5; }
+
+.select-dropdown {
+  width: 100%;
+  background: #F8F6F3;
+  border: 2px solid #E0DCD6;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font: 500 13px/1 'Noto Sans JP', sans-serif;
+  color: #2D2A26;
+  appearance: auto;
+  outline: none;
+  cursor: pointer;
+}
+.select-dropdown:disabled {
+  opacity: 0.5;
+  color: rgba(45,42,38,0.35);
+}
+.select-dropdown.active {
+  /* border-color set via JS */
+}
+
+.question-info {
+  border-radius: 10px;
+  padding: 12px 16px;
+  font: 400 12px/1.4 'Noto Sans JP', sans-serif;
+}
+
+.select-spacer { height: 20px; flex-shrink: 1; }
+
+/* ========================================
+   BUTTONS
+   ======================================== */
+.btn-primary {
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.btn-primary:hover { transform: translateY(-2px); }
+.btn-primary-text {
+  font: 700 15px/1 'Zen Maru Gothic', sans-serif;
+  color: #fff;
+}
+
+.btn-secondary {
+  background: #F8F6F3;
+  border: 2px solid #E0DCD6;
+  border-radius: 10px;
+  padding: 14px;
+  text-align: center;
+  cursor: pointer;
+}
+.btn-secondary-text {
+  font: 600 13px/1 'Noto Sans JP', sans-serif;
+  color: rgba(45,42,38,0.6);
+}
+
+.btn-action {
+  border-radius: 10px;
+  padding: 14px;
+  text-align: center;
+  cursor: pointer;
+}
+.btn-action-text {
+  font: 700 14px/1 'Zen Maru Gothic', sans-serif;
+  color: #fff;
+}
+
+.btn-outline {
+  background: #F8F6F3;
+  border: 2px solid #E0DCD6;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+  cursor: pointer;
+  font: 600 12px/1 'Noto Sans JP', sans-serif;
+  color: rgba(45,42,38,0.6);
+}
+
+/* ========================================
+   QUESTION PAGE
+   ======================================== */
+#screen-question {
+  background: #FDFBF8;
+}
+
+.question-header {
+  padding: 14px 20px 12px;
+}
+
+.question-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.progress-label {
+  font: 600 12px/1 'Noto Sans JP', sans-serif;
+}
+
+.remaining-label {
+  font: 500 11px/1 'Noto Sans JP', sans-serif;
+}
+
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.progress-bar-bg {
+  flex: 1;
+  height: 6px;
+  background: rgba(255,255,255,0.4);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: rgba(255,255,255,0.9);
+  border-radius: 3px;
+  transition: width 0.3s;
+  width: 0%;
+}
+
+.progress-text {
+  font: 700 11px/1 'Noto Sans JP', sans-serif;
+}
+
+.question-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 20px 80px;
+}
+
+/* --- Question Content Styles --- */
+.q-label {
+  font: 400 11px/1 'Noto Sans JP', sans-serif;
+  color: rgba(45,42,38,0.45);
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.q-theme {
+  font: 700 18px/1.5 'Zen Maru Gothic', sans-serif;
+  color: #2D2A26;
+  text-align: center;
+  margin-bottom: 28px;
+  padding: 0 8px;
+}
+
+.q-text {
+  font: 600 15px/1.5 'Noto Sans JP', sans-serif;
+  color: #2D2A26;
+  margin-bottom: 18px;
+}
+
+.q-text-fill {
+  font: 600 14px/1.7 'Noto Sans JP', sans-serif;
+  color: #2D2A26;
+  margin-bottom: 20px;
+}
+
+/* Radio options */
+.option-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.option-item {
+  background: #F8F6F3;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.option-item.selected {
+  /* colors set inline */
+}
+.option-item.correct {
+  background: #E8F5E9;
+  border-color: #5BAE6A;
+}
+.option-item.wrong {
+  background: #FFEBEE;
+  border-color: #E57373;
+}
+.option-item.disabled { cursor: default; }
+
+.option-radio {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #D4D0CA;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.option-radio-inner {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: none;
+}
+.option-item.selected .option-radio-inner,
+.option-item.correct .option-radio-inner { display: block; }
+
+.option-text {
+  font: 400 13px/1.3 'Noto Sans JP', sans-serif;
+  color: #2D2A26;
+}
+.option-item.selected .option-text { font-weight: 500; }
+
+/* Story questions */
+.story-q-header {
+  font: 600 13px/1.4 'Noto Sans JP', sans-serif;
+  color: #2D2A26;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.story-q-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 10px sans-serif;
+  color: #fff;
+  flex-shrink: 0;
+}
+.story-opts {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-left: 28px;
+}
+.story-option {
+  background: #F8F6F3;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: 400 12px/1.3 'Noto Sans JP', sans-serif;
+  color: #2D2A26;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.story-radio {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #D4D0CA;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.story-radio-inner {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: none;
+}
+
+/* Result feedback */
+.result-feedback {
+  border-radius: 12px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  animation: scaleIn 0.2s ease;
+}
+.result-feedback.correct {
+  background: #E8F5E9;
+  border: 2px solid #5BAE6A;
+}
+.result-feedback.wrong {
+  background: #FFEBEE;
+  border: 2px solid #E57373;
+}
+
+.result-feedback-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 600 16px sans-serif;
+  color: #fff;
+  flex-shrink: 0;
+}
+.result-feedback-icon.correct { background: #5BAE6A; }
+.result-feedback-icon.wrong { background: #E57373; }
+
+.result-feedback-title {
+  font: 700 14px/1.2 'Zen Maru Gothic', sans-serif;
+}
+.result-feedback-sub {
+  font: 400 11px/1.3 'Noto Sans JP', sans-serif;
+  margin-top: 2px;
+}
+
+/* Detail / explanation */
+.detail-box {
+  background: #F8F6F3;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
+.detail-title {
+  font: 600 12px/1 'Noto Sans JP', sans-serif;
+  color: #2D2A26;
+  margin-bottom: 8px;
+}
+.detail-text {
+  font: 400 12px/1.6 'Noto Sans JP', sans-serif;
+  color: rgba(45,42,38,0.65);
+  white-space: pre-wrap;
+}
+
+/* Mini stats in question page */
+.mini-stats {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.mini-stat {
+  flex: 1;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+}
+.mini-stat-val {
+  font: 700 16px/1 'Noto Sans JP', sans-serif;
+}
+.mini-stat-label {
+  font: 400 9px/1 'Noto Sans JP', sans-serif;
+  color: rgba(45,42,38,0.4);
+  margin-top: 2px;
+}
+
+/* Countdown timer */
+.timer-wrap {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.timer-svg-wrap {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  margin: 0 auto 20px;
+}
+.timer-svg-wrap svg { transform: rotate(-90deg); }
+.timer-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.timer-number {
+  font: 800 40px/1 'Noto Sans JP', sans-serif;
+}
+.timer-unit {
+  font: 400 11px/1 'Noto Sans JP', sans-serif;
+  color: rgba(45,42,38,0.4);
+  margin-top: 4px;
+}
+.timer-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+/* Video embed */
+.video-embed {
+  margin-bottom: 18px;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 16/9;
+}
+.video-embed iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Essay */
+.essay-guide {
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  font: 400 11px/1.3 'Noto Sans JP', sans-serif;
+}
+.essay-textarea {
+  width: 100%;
+  background: #fff;
+  border-radius: 10px;
+  padding: 14px 16px;
+  font: 400 13px/1.8 'Noto Sans JP', sans-serif;
+  color: #2D2A26;
+  resize: vertical;
+  outline: none;
+  box-sizing: border-box;
+}
+.essay-count {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+  margin-bottom: 16px;
+  font: 500 11px/1 'Noto Sans JP', sans-serif;
+}
+
+/* Fill-blank select */
+.fill-select-group {
+  margin-bottom: 10px;
+}
+.fill-select-label {
+  font: 500 11px/1 'Noto Sans JP', sans-serif;
+  margin-bottom: 6px;
+}
+.fill-select {
+  width: 100%;
+  background: #F8F6F3;
+  border-radius: 8px;
+  padding: 11px 14px;
+  font: 500 12px/1 'Noto Sans JP', sans-serif;
+  color: #2D2A26;
+  appearance: auto;
+  outline: none;
+}
+
+.fill-result {
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-top: 12px;
+  margin-bottom: 16px;
+  font: 700 14px/1 'Zen Maru Gothic', sans-serif;
+}
+.fill-result.correct {
+  background: #E8F5E9;
+  border: 2px solid #5BAE6A;
+  color: #2E7D32;
+}
+.fill-result.wrong {
+  background: #FFEBEE;
+  border: 2px solid #E57373;
+  color: #C62828;
+}
+
+/* ========================================
+   COMPLETE PAGE
+   ======================================== */
+#screen-complete {
+  background: #FDFBF8;
+}
+
+.complete-header {
+  background: linear-gradient(135deg, #FFEAE3, #F4DFF8, #E3EAFF);
+  padding: 40px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.confetti {
+  position: absolute;
+  border-radius: 50%;
+}
+.confetti.c1 {
+  top: 20px; left: 20%;
+  width: 8px; height: 8px;
+  background: #E8937E;
+  animation: confetti1 1.5s ease-out forwards;
+}
+.confetti.c2 {
+  top: 30px; left: 50%;
+  width: 6px; height: 6px;
+  background: #7A9DE8;
+  animation: confetti2 1.8s ease-out forwards;
+}
+.confetti.c3 {
+  top: 15px; left: 75%;
+  width: 7px; height: 7px;
+  background: #5BAE6A;
+  animation: confetti3 1.6s ease-out forwards;
+}
+.confetti.c4 {
+  top: 25px; left: 35%;
+  width: 5px; height: 5px;
+  border-radius: 2px;
+  background: #F0B85A;
+  animation: confetti2 1.4s ease-out forwards;
+}
+
+.complete-title {
+  font: 900 26px/1.2 'Zen Maru Gothic', sans-serif;
+  color: #2D2A26;
+}
+
+.complete-subtitle {
+  font: 400 12px/1.4 'Noto Sans JP', sans-serif;
+  color: rgba(45,42,38,0.5);
+  margin-top: 6px;
+}
+
+.complete-body {
+  padding: 24px 20px 28px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.complete-results {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  margin-bottom: 24px;
+}
+
+.score-circle-wrap {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+.score-circle-wrap svg { transform: rotate(-90deg); }
+.score-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.score-pct {
+  font: 800 32px/1 'Noto Sans JP', sans-serif;
+  color: #5BAE6A;
+}
+.score-label {
+  font: 400 10px/1 'Noto Sans JP', sans-serif;
+  color: rgba(45,42,38,0.4);
+  margin-top: 3px;
+}
+
+.result-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.result-stat-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.result-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 600 13px/1 sans-serif;
+}
+.correct-icon { background: #E8F5E9; color: #5BAE6A; }
+.wrong-icon { background: #FFEBEE; color: #E57373; }
+.streak-icon { background: #FFF3E0; color: #F0B85A; font-size: 11px; }
+
+.result-value {
+  font: 700 16px/1 'Noto Sans JP', sans-serif;
+  color: #2D2A26;
+}
+.result-label {
+  font: 400 9px/1 'Noto Sans JP', sans-serif;
+  color: rgba(45,42,38,0.4);
+}
+
+.complete-spacer { flex: 1; }
+
+.complete-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ========================================
+   QUESTION BACK BUTTON
+   ======================================== */
+.question-back {
+  font: 400 11px/1 'Noto Sans JP', sans-serif;
+  cursor: pointer;
+  padding: 5px 10px;
+  background: rgba(255,255,255,0.4);
+  border-radius: 8px;
+  color: rgba(45,42,38,0.6);
+  flex-shrink: 0;
+}
+.question-back:hover {
+  background: rgba(255,255,255,0.7);
+}
+
+/* ========================================
+   SITE FOOTER
+   ======================================== */
+.site-footer {
+  padding: 16px 20px;
+  text-align: center;
+  background: rgba(255,255,255,0.6);
+  border-top: 1px solid rgba(0,0,0,0.06);
+  flex-shrink: 0;
+}
+.footer-top-link {
+  font: 500 12px/1 'Noto Sans JP', sans-serif;
+  color: rgba(45,42,38,0.5);
+  cursor: pointer;
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+.footer-top-link:hover {
+  background: rgba(0,0,0,0.04);
+  color: rgba(45,42,38,0.8);
+}
+.footer-copy {
+  font: 400 10px/1 'Noto Sans JP', sans-serif;
+  color: rgba(45,42,38,0.3);
+  margin-top: 8px;
+}
