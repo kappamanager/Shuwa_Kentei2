@@ -1009,6 +1009,7 @@
 
   function goTop() {
     if (countdownInterval) { clearInterval(countdownInterval); countdownInterval = null; }
+    if (state.answered > 0) saveStats(state.answered, state.correct);
     setState({
       screen: 'top', mode: null,
       selectedYear: '', selectedLevel: '', selectedType: '',
