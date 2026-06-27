@@ -452,15 +452,27 @@
 
     // Build question body
     const body = $('question-body');
-    body.innerHTML = '';
     const q = state.currentQuestion;
+
+    // Preserve YouTube iframe to avoid reload flicker (only if same video)
+    let existingVideo = body.querySelector('.video-embed');
+    if (existingVideo) {
+      const iframe = existingVideo.querySelector('iframe');
+      const currentRef = iframe ? iframe.src : '';
+      if (q && q.Reference && currentRef.includes(q.Reference)) {
+        existingVideo.remove();
+      } else {
+        existingVideo = null;
+      }
+    }
+    body.innerHTML = '';
     if (!q) return;
 
     if (q.Type === 'スピーチ') buildSpeechUI(body, q, t);
     else if (q.Type === '小論文') buildEssayUI(body, q, t);
-    else if (q.Type === 'ストーリー') buildStoryUI(body, q, t);
+    else if (q.Type === 'ストーリー') buildStoryUI(body, q, t, existingVideo);
     else if (q.Type === '穴埋め形式') buildFillBlankUI(body, q, t);
-    else if (['基本単語', '短文', '4択問題'].includes(q.Type)) buildMultipleChoiceUI(body, q, t);
+    else if (['基本単語', '短文', '4択問題'].includes(q.Type)) buildMultipleChoiceUI(body, q, t, existingVideo);
     else body.textContent = '問題タイプが不明です: ' + q.Type;
   }
 
@@ -561,11 +573,14 @@
   }
 
   // --- Build Story UI ---
-  function buildStoryUI(container, q, t) {
+  function buildStoryUI(container, q, t, existingVideo) {
     const { storyQuestions, storyAnswers, showResult } = state;
     if (storyQuestions.length === 0) return;
 
-    if (q.Reference) buildVideo(container, q.Reference);
+    if (q.Reference) {
+      if (existingVideo) container.appendChild(existingVideo);
+      else buildVideo(container, q.Reference);
+    }
 
     storyQuestions.forEach((sq, qi) => {
       const wrap = appendEl(container, 'div', { style: 'margin-bottom:16px' });
@@ -631,8 +646,11 @@
   }
 
   // --- Build Multiple Choice UI ---
-  function buildMultipleChoiceUI(container, q, t) {
-    if (q.Reference) buildVideo(container, q.Reference);
+  function buildMultipleChoiceUI(container, q, t, existingVideo) {
+    if (q.Reference) {
+      if (existingVideo) container.appendChild(existingVideo);
+      else buildVideo(container, q.Reference);
+    }
 
     const qText = q.Type === '4択問題' ? q.Question : q.Theme;
     appendEl(container, 'div', { className: 'q-text' }, qText);
@@ -643,6 +661,7 @@
 
     const listEl = appendEl(container, 'div', { className: 'option-list' });
 
+    const items = [];
     opts.forEach((opt, oi) => {
       const selected = selectedAnswer === oi;
       const isCorrect = showResult && oi === correctIdx;
@@ -661,6 +680,7 @@
         className: 'option-item' + (showResult ? ' disabled' : ''),
         style: `background:${bg};border-color:${border}`
       });
+      items.push(item);
 
       const radio = appendEl(item, 'div', { className: 'option-radio', style: `border-color:${radioBorder}` });
       if (selected || isCorrect) {
@@ -673,14 +693,49 @@
         className: 'option-text',
         style: `color:${textColor};font-weight:${fontWeight}`
       }, opt);
-
-      if (!showResult) {
-        item.onclick = () => { state.selectedAnswer = oi; render(); };
-      }
     });
 
+    // Answer button area (inserted after option list, before result feedback)
+    const answerArea = appendEl(container, 'div', { className: 'answer-area' });
+
+    if (!showResult) {
+      items.forEach((item, oi) => {
+        item.onclick = () => {
+          state.selectedAnswer = oi;
+          // Update option styles without re-rendering
+          items.forEach((el, j) => {
+            const isSel = j === oi;
+            el.style.background = isSel ? t.accentBg : '#F8F6F3';
+            el.style.borderColor = isSel ? t.accent : 'transparent';
+            const radio = el.querySelector('.option-radio');
+            radio.style.borderColor = isSel ? t.accent : '#D4D0CA';
+            let inner = radio.querySelector('.option-radio-inner');
+            if (isSel) {
+              if (!inner) { inner = appendEl(radio, 'div', { className: 'option-radio-inner' }); }
+              inner.style.display = 'block';
+              inner.style.background = t.accent;
+            } else if (inner) {
+              inner.style.display = 'none';
+            }
+            const text = el.querySelector('.option-text');
+            text.style.color = isSel ? t.accentDark : '#2D2A26';
+            text.style.fontWeight = isSel ? '500' : '400';
+          });
+          // Show answer button
+          if (!answerArea.querySelector('.btn-action')) {
+            const btn = appendEl(answerArea, 'div', {
+              className: 'btn-action',
+              style: `background:${t.btnBg};box-shadow:0 3px 10px ${t.btnShadow}`
+            });
+            appendEl(btn, 'div', { className: 'btn-action-text' }, '回答する');
+            btn.onclick = () => submitAnswer();
+          }
+        };
+      });
+    }
+
     if (!showResult && selectedAnswer !== null) {
-      const btn = appendEl(container, 'div', {
+      const btn = appendEl(answerArea, 'div', {
         className: 'btn-action',
         style: `background:${t.btnBg};box-shadow:0 3px 10px ${t.btnShadow}`
       });
