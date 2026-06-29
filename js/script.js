@@ -784,7 +784,12 @@
   function buildFillBlankUI(container, q, t) {
     appendEl(container, 'div', { className: 'q-text-fill' }, q.Question);
 
-    const opts = (q.Option || '').split('\n').filter(o => o.trim());
+    const optStr = (q.Option || '').replace(/\r\n|\r|\n/g, '');
+    const positions = [...optStr.matchAll(/\d+\.\s/g)].map(m => m.index);
+    const opts = positions.map((pos, i) => {
+      const end = i + 1 < positions.length ? positions[i + 1] : optStr.length;
+      return optStr.slice(pos, end).trim();
+    });
     const matches = [...(q.Question || '').matchAll(/[（\(]([ア-オ])[）\)]/g)];
     const uniqueMatches = [...new Set(matches.map(m => m[1]))];
 
@@ -835,6 +840,19 @@
       appendEl(container, 'div', {
         className: 'fill-result ' + (correct ? 'correct' : 'wrong')
       }, correct ? '正解です' : '不正解です');
+
+      if (!correct) {
+        const ansNums = `${q.Answer}`.split(',');
+        const ansText = uniqueMatches.map((m, i) => {
+          const num = (ansNums[i] || '').trim();
+          const found = opts.find(o => o.split('.')[0].trim() === num);
+          return m + '→' + (found || num);
+        }).join('、');
+        appendEl(container, 'div', {
+          className: 'fill-answer',
+          style: "font:400 13px/1.6 'Noto Sans JP',sans-serif;color:#C62828;margin-top:8px"
+        }, '正答: ' + ansText);
+      }
 
       if (q.Detail) buildDetail(container, q.Detail);
       buildNextButton(container, t);
