@@ -459,13 +459,14 @@
     if (existingVideo) {
       const iframe = existingVideo.querySelector('iframe');
       const currentRef = iframe ? iframe.src : '';
-      if (q && q.Reference && currentRef.includes(q.Reference)) {
-        existingVideo.remove();
-      } else {
+      if (!(q && q.Reference && currentRef.includes(q.Reference))) {
         existingVideo = null;
       }
     }
-    body.innerHTML = '';
+    // Remove all children except the preserved video
+    Array.from(body.children).forEach(ch => {
+      if (ch !== existingVideo) ch.remove();
+    });
     if (!q) return;
 
     if (q.Type === 'スピーチ') buildSpeechUI(body, q, t);
@@ -578,7 +579,8 @@
     if (storyQuestions.length === 0) return;
 
     if (q.Reference) {
-      if (existingVideo) container.appendChild(existingVideo);
+      if (existingVideo && existingVideo.parentNode === container) { /* already in place */ }
+      else if (existingVideo) container.appendChild(existingVideo);
       else buildVideo(container, q.Reference);
     }
 
@@ -648,7 +650,8 @@
   // --- Build Multiple Choice UI ---
   function buildMultipleChoiceUI(container, q, t, existingVideo) {
     if (q.Reference) {
-      if (existingVideo) container.appendChild(existingVideo);
+      if (existingVideo && existingVideo.parentNode === container) { /* already in place */ }
+      else if (existingVideo) container.appendChild(existingVideo);
       else buildVideo(container, q.Reference);
     }
 
@@ -695,14 +698,20 @@
       }, opt);
     });
 
-    // Answer button area (inserted after option list, before result feedback)
+    // Answer button (always visible, disabled until selection)
     const answerArea = appendEl(container, 'div', { className: 'answer-area' });
 
     if (!showResult) {
+      const ansBtn = appendEl(answerArea, 'div', {
+        className: 'btn-action',
+        style: `background:${t.btnBg};box-shadow:0 3px 10px ${t.btnShadow};opacity:${selectedAnswer !== null ? '1' : '0.35'};pointer-events:${selectedAnswer !== null ? 'auto' : 'none'}`
+      });
+      appendEl(ansBtn, 'div', { className: 'btn-action-text' }, '回答する');
+      ansBtn.onclick = () => submitAnswer();
+
       items.forEach((item, oi) => {
         item.onclick = () => {
           state.selectedAnswer = oi;
-          // Update option styles without re-rendering
           items.forEach((el, j) => {
             const isSel = j === oi;
             el.style.background = isSel ? t.accentBg : '#F8F6F3';
@@ -721,26 +730,10 @@
             text.style.color = isSel ? t.accentDark : '#2D2A26';
             text.style.fontWeight = isSel ? '500' : '400';
           });
-          // Show answer button
-          if (!answerArea.querySelector('.btn-action')) {
-            const btn = appendEl(answerArea, 'div', {
-              className: 'btn-action',
-              style: `background:${t.btnBg};box-shadow:0 3px 10px ${t.btnShadow}`
-            });
-            appendEl(btn, 'div', { className: 'btn-action-text' }, '回答する');
-            btn.onclick = () => submitAnswer();
-          }
+          ansBtn.style.opacity = '1';
+          ansBtn.style.pointerEvents = 'auto';
         };
       });
-    }
-
-    if (!showResult && selectedAnswer !== null) {
-      const btn = appendEl(answerArea, 'div', {
-        className: 'btn-action',
-        style: `background:${t.btnBg};box-shadow:0 3px 10px ${t.btnShadow}`
-      });
-      appendEl(btn, 'div', { className: 'btn-action-text' }, '回答する');
-      btn.onclick = () => submitAnswer();
     }
 
     if (showResult) {
@@ -878,10 +871,6 @@
     });
     appendEl(btn, 'div', { className: 'btn-action-text' }, '次の問題へ');
     btn.onclick = () => nextQuestion();
-    setTimeout(() => {
-      const max = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
-      window.scrollTo({ top: max, behavior: 'smooth' });
-    }, 600);
   }
 
   function appendEl(parent, tag, attrs, text) {
